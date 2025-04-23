@@ -10,8 +10,7 @@ jobs:
 
     defaults:
       run:
-        # run all flutter commands inside the flutter/ folder
-        working-directory: ./flutter
+        working-directory: ./flutter  # <-- Modify this if your project is inside a folder
 
     steps:
     - name: Checkout repo
@@ -36,5 +35,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        # point to the web build inside flutter/
-        publish_dir: flutter/build/web
+        publish_dir: flutter/build/web  # <-- Ensure this path points to where the build/web is

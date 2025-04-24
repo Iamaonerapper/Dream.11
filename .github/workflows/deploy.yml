@@ -10,24 +10,24 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./flutter  # <-- Modify this if your project is inside a folder
+        working-directory: ./  # Use './flutter' if your Flutter project is inside a folder
 
     steps:
-    - name: Checkout repo
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Install Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.19.5'
+        flutter-version: 'stable'
 
-    - name: Enable web support
+    - name: Enable Flutter Web
       run: flutter config --enable-web
 
-    - name: Get dependencies
+    - name: Install dependencies
       run: flutter pub get
 
-    - name: Build web release
+    - name: Build Flutter Web
       run: flutter build web --release
 
     - name: Deploy to GitHub Pages
@@ -35,4 +35,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: flutter/build/web  # <-- Ensure this path points to where the build/web is
+        publish_dir: build/web

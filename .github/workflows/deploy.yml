@@ -8,18 +8,14 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./  # Use './flutter' if your Flutter project is inside a folder
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Install Flutter
+    - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.19.5
+        flutter-version: '3.19.5'
 
     - name: Enable Flutter Web
       run: flutter config --enable-web
@@ -27,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
 
-    - name: Build Flutter Web
+    - name: Build Web
       run: flutter build web --release
 
     - name: Deploy to GitHub Pages

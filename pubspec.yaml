@@ -1,0 +1,15 @@
+name: eleven_dream
+description: 11Dream - Dream11 Clone App
+version: 1.0.0+1
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^2.4.0
+  firebase_auth: ^4.2.2
+  cloud_firestore: ^4.4.5
+  http: ^0.14.0
+  provider: ^6.0.0
+flutter:
+  uses-material-design: true

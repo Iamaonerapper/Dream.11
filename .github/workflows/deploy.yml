@@ -1,37 +1,48 @@
-- name: Checkout repository
-    uses: actions/checkout@v3
+name: Build & Deploy Flutter Web
 
-  - name: Debug: Show working directory and files
-    run: |
-      echo "PWD: $(pwd)"
-      ls -la
+on:
+  push:
+    branches: [main]
 
-  - name: Set up Flutter
-    uses: subosito/flutter-action@v2
-    with:
-      flutter-version: "3.19.5"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-  - name: Enable Flutter Web
-    run: flutter config --enable-web
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-  - name: Cache Flutter dependencies
-    uses: actions/cache@v3
-    with:
-      path: |
-        ~/.pub-cache
-      key: ${{ runner.os }}-pub-cache-${{ hashFiles('**/pubspec.lock') }}
-      restore-keys: |
-        ${{ runner.os }}-pub-cache
+      - name: Debug: Show working directory and files
+        run: |
+          echo "PWD: $(pwd)"
+          ls -la
 
-  - name: Install dependencies
-    run: flutter pub get
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.19.5"
 
-  - name: Build Web
-    run: flutter build web --release
+      - name: Enable Flutter Web
+        run: flutter config --enable-web
 
-  - name: Deploy to GitHub Pages
-    uses: peaceiris/actions-gh-pages@v3
-    with:
-      github_token: ${{ secrets.GITHUB_TOKEN }}
-      publish_branch: gh-pages
-      publish_dir: build/web
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+          key: ${{ runner.os }}-pub-cache-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-cache
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build Web
+        run: flutter build web --release
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: build/web

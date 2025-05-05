@@ -19,25 +19,28 @@ jobs:
 
       - name: Enable Flutter Web
         run: flutter config --enable-web
+        working-directory: Dream.11
 
       - name: Cache Flutter dependencies
         uses: actions/cache@v3
         with:
           path: |
             ~/.pub-cache
-          key: ${{ runner.os }}-pub-cache-${{ hashFiles('**/pubspec.lock') }}
+          key: ${{ runner.os }}-pub-cache-${{ hashFiles('Dream.11/pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-pub-cache
 
       - name: Install dependencies
         run: flutter pub get
+        working-directory: Dream.11
 
       - name: Build Web
         run: flutter build web --release
+        working-directory: Dream.11
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: build/web
+          publish_dir: Dream.11/build/web

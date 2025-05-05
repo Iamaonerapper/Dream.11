@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          path: Dream.11  # <<== IMPORTANT: checkout into this subdirectory
+          path: Dream.11
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -47,5 +47,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: Dream.11/build/web
-
 

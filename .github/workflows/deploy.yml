@@ -5,17 +5,12 @@ on:
     branches: [main]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Debug: Show working directory and files
-        run: |
-          echo "PWD: $(pwd)"
-          ls -la
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -25,20 +20,11 @@ jobs:
       - name: Enable Flutter Web
         run: flutter config --enable-web
 
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.pub-cache
-          key: ${{ runner.os }}-pub-cache-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pub-cache
-
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Web
-        run: flutter build web --release
+      - name: Build web release
+        run: flutter build web --release --base-href="/Dream.11/"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
